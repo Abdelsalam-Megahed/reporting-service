@@ -2,9 +2,14 @@ package me.readyplayer.reportingservice;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @AllArgsConstructor
@@ -14,9 +19,12 @@ public class ReportController {
     private final ReportGenerationService reportingService;
 
     @PostMapping
-    public ResponseEntity<ReportResponse> generateReport(@RequestBody @Valid ReportRequest request) {
-        ReportResponse response = reportingService.generateReport(request);
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> generateReport(@RequestBody @Valid ReportRequest request) {
+        InputStream in = reportingService.generateReport(request);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(in));
     }
 }
