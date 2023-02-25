@@ -4,7 +4,7 @@ WORKDIR /usr/app/
 COPY . .
 RUN gradle build
 
-# Spinning up the server
+# Production stage
 FROM openjdk:latest
 ENV APP_HOME=/usr/app/
 WORKDIR $APP_HOME
