@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.Date;
 
 @Service
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class ReportGenerationService {
     private Paragraph createReportTitle() {
         Font fontTitle = FontFactory.getFont(FontFactory.TIMES_ROMAN);
         fontTitle.setSize(20);
-        Paragraph title = new Paragraph("Custom report", fontTitle);
+        Paragraph title = new Paragraph("Production report", fontTitle);
         title.setAlignment(Paragraph.ALIGN_CENTER);
 
         return title;
@@ -56,6 +57,9 @@ public class ReportGenerationService {
 
         table.addCell("Total");
         table.addCell((request.getQuantity() * request.getUnitPrice()) + request.getCurrency());
+
+        table.addCell("Created at");
+        table.addCell(new Date().toString());
 
         return table;
     }
