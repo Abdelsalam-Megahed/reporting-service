@@ -51,18 +51,32 @@ export default {
 
       this.disableDownloadButton = false;
     },
-  }
-}
+    selectProduct(id) {
+      this.form.productId = id;
+    },
+  },
+};
 </script>
 
 <template>
   <div class="form-container">
     <h2>Create your report</h2>
     <form @submit.prevent="downloadReport">
-      <div class="input-container">
-        <input type="text" v-model="form.productId" required/>
-        <label>Product name</label>
+      <div class="dropdown-container">
+        <p style="padding: 10px 0; font-size: 16px; color: #e8d5c4">
+          Product name
+        </p>
+        <div
+            class="option"
+            :class="{ active: product.id === form.productId }"
+            v-for="product in products"
+            :key="product.id"
+            @click="selectProduct(product.id)"
+        >
+          {{ product.name }}
+        </div>
       </div>
+
       <div class="input-container">
         <input type="number" v-model="form.quantity" required min="1"/>
         <label>Quantity</label>
@@ -113,6 +127,28 @@ body {
   text-align: center;
 }
 
+.dropdown-container {
+  margin-top: 4px;
+  margin-bottom: 32px;
+}
+
+.option {
+  padding: 8px 4px;
+  margin-bottom: 8px;
+  color: #e8d5c4;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.active {
+  border: 2px solid #e8d5c4;
+}
+
+.option:hover {
+  cursor: pointer;
+}
+
 .form-container .input-container {
   position: relative;
 }
@@ -136,8 +172,6 @@ body {
   padding: 10px 0;
   font-size: 16px;
   color: #e8d5c4;
-  pointer-events: none;
-  transition: 0.5s;
 }
 
 button {
@@ -156,6 +190,7 @@ button {
 button:hover {
   background: #e8d5c4;
   color: #fff;
+  cursor: pointer;
 }
 
 button:disabled {
