@@ -1,4 +1,4 @@
-package me.readyplayer.reportingservice.exceptions;
+package me.readyplayer.reportingservice.exception;
 
 public class CustomException extends Exception {
     public CustomException(String message) {

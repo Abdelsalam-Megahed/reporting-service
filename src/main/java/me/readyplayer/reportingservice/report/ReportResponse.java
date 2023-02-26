@@ -1,4 +1,4 @@
-package me.readyplayer.reportingservice;
+package me.readyplayer.reportingservice.report;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,6 +2,7 @@ package me.readyplayer.reportingservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.readyplayer.reportingservice.report.ReportRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,7 +27,7 @@ class ReportingServiceApplicationTests {
 
 	@Test
 	void itShouldReturnReport() throws Exception {
-		ReportRequest request = new ReportRequest("Bike", 2, 500, "$", "E-bike for cities");
+		ReportRequest request = new ReportRequest(2, 40, "E-bike for cities");
 
 		MvcResult result = mockMvc.perform(post("/api/v1/generate-report")
 						.contentType(MediaType.APPLICATION_JSON)
@@ -39,7 +40,7 @@ class ReportingServiceApplicationTests {
 
 	@Test
 	void itShouldGiveBadRequestIfQuantityIsLessThanOne() throws Exception {
-		ReportRequest request = new ReportRequest("Bike", 0, 500, "$", "E-bike for cities");
+		ReportRequest request = new ReportRequest(1, 0, "for cities");
 
 		mockMvc.perform(post("/api/v1/generate-report")
 						.contentType(MediaType.APPLICATION_JSON)

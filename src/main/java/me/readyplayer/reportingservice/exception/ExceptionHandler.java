@@ -1,4 +1,4 @@
-package me.readyplayer.reportingservice.exceptions;
+package me.readyplayer.reportingservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;

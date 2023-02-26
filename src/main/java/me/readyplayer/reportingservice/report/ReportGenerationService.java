@@ -1,9 +1,12 @@
-package me.readyplayer.reportingservice;
+package me.readyplayer.reportingservice.report;
 
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import lombok.AllArgsConstructor;
+import me.readyplayer.reportingservice.exception.CustomException;
+import me.readyplayer.reportingservice.product.Product;
+import me.readyplayer.reportingservice.product.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -12,17 +15,17 @@ import java.util.Date;
 @Service
 @AllArgsConstructor
 public class ReportGenerationService {
-    public InputStream generateReport(ReportRequest request) throws DocumentException {
+    private final ProductService productService;
+
+    public InputStream generateReport(ReportRequest request) throws DocumentException, CustomException {
+        Product product = productService.findProductById(request.getProductId());
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, out);
 
         document.open();
-
         document.add(createReportTitle());
-
-        document.add(createReportTable(request));
-
+        document.add(createReportTable(request, product));
         document.close();
 
         return new ByteArrayInputStream(out.toByteArray());
@@ -37,26 +40,28 @@ public class ReportGenerationService {
         return title;
     }
 
-    private PdfPTable createReportTable(ReportRequest request) {
+    private PdfPTable createReportTable(ReportRequest request, Product product) {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100f);
         table.setWidths(new int[]{3, 3});
         table.setSpacingBefore(40);
 
         table.addCell("Product name");
-        table.addCell(request.getProductName());
-
-        table.addCell("Product description");
-        table.addCell(request.getDescription());
+        table.addCell(product.getName());
 
         table.addCell("Quantity");
         table.addCell(String.valueOf(request.getQuantity()));
 
         table.addCell("Unit price");
-        table.addCell(request.getUnitPrice() + request.getCurrency());
+        table.addCell(product.getPrice() + " EUR");
 
         table.addCell("Total");
-        table.addCell((request.getQuantity() * request.getUnitPrice()) + request.getCurrency());
+        table.addCell((request.getQuantity() * product.getPrice()) + " EUR");
+
+        if (!request.getNote().isEmpty()) {
+            table.addCell("Note");
+            table.addCell(request.getNote());
+        }
 
         table.addCell("Created at");
         table.addCell(new Date().toString());
