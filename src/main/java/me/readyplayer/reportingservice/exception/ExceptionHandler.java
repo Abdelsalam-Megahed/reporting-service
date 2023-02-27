@@ -39,7 +39,7 @@ public class ExceptionHandler {
     public Map<String, String> handleMessageNotReadableException(HttpMessageNotReadableException exception) {
         Map<String, String> errorMap = new HashMap<>();
 
-        errorMap.put("error", exception.getMessage());
+        errorMap.put("error", "Request is invalid!");
 
         return errorMap;
     }
