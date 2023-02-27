@@ -29,6 +29,12 @@ export default {
           });
     },
     downloadReport() {
+      if (!this.form.productId) {
+        this.error = "Please select a product!";
+        return;
+      }
+
+      this.error = "";
       this.disableDownloadButton = true;
 
       axios
@@ -44,8 +50,10 @@ export default {
             a.remove();
             setTimeout(() => window.URL.revokeObjectURL(url), 100);
           })
-          .catch(({response}) => {
-            this.error = response?.data?.error;
+          .catch(async (error) => {
+            let responseObj = await error.response.data.text();
+            let response = JSON.parse(responseObj);
+            this.error = response?.error;
             this.disableDownloadButton = false;
           });
 
