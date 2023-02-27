@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
@@ -20,11 +21,11 @@ public class ReportController {
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<InputStreamResource> generateReport(@RequestBody @Valid ReportRequest request) throws CustomException {
-        InputStream in = reportingService.generateReport(request);
+    public ResponseEntity<InputStreamResource> generateReport(@RequestBody @Valid ReportRequest request) throws CustomException, IOException {
+        InputStream inputStream = reportingService.generateReport(request);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(in));
+                .body(new InputStreamResource(inputStream));
     }
 }

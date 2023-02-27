@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,16 @@ public class ExceptionHandler {
         Map<String, String> errorMap = new HashMap<>();
 
         errorMap.put("error", "Request is invalid!");
+
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @org.springframework.web.bind.annotation.ExceptionHandler(IOException.class)
+    public Map<String, String> handleIOException(IOException exception) {
+        Map<String, String> errorMap = new HashMap<>();
+        System.out.println(exception);
+        errorMap.put("error", "Directory is not found!");
 
         return errorMap;
     }

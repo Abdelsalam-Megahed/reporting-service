@@ -45,7 +45,7 @@ export default {
             let url = window.URL.createObjectURL(data);
             let a = document.createElement("a");
             a.href = url;
-            a.download = "report_" + Date.now() + ".pdf";
+            a.download = "report.pdf";
             a.click();
             a.remove();
             setTimeout(() => window.URL.revokeObjectURL(url), 100);

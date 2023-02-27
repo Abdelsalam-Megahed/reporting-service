@@ -1,6 +1,7 @@
 .gradle
 .idea
 build
+storage
 # Compiled class file
 *.class
 

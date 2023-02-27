@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import me.readyplayer.reportingservice.exception.CustomException;
 import me.readyplayer.reportingservice.product.Product;
 import me.readyplayer.reportingservice.product.ProductService;
+import me.readyplayer.reportingservice.utils.FileUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -17,18 +18,20 @@ import java.util.Date;
 public class ReportGenerationService {
     private final ProductService productService;
 
-    public InputStream generateReport(ReportRequest request) throws DocumentException, CustomException {
+    public InputStream generateReport(ReportRequest request) throws DocumentException, CustomException, IOException {
         Product product = productService.findProductById(request.getProductId());
         Document document = new Document();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, out);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PdfWriter.getInstance(document, outputStream);
 
         document.open();
         document.add(createReportTitle());
         document.add(createReportTable(request, product));
         document.close();
 
-        return new ByteArrayInputStream(out.toByteArray());
+        FileUtils.saveFileToDisk(new ByteArrayInputStream(outputStream.toByteArray()));
+
+        return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
     private Paragraph createReportTitle() {
