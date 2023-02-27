@@ -13,8 +13,8 @@ public class ProductService {
         return Arrays.asList(
                 new Product(1, "Bike", 1000L),
                 new Product(2, "E-bike", 3000L),
-                new Product(3, "Mountain Bike", 1500L),
-                new Product(4, "Folding E-Bike", 3500L)
+                new Product(3, "Mountain bike", 1500L),
+                new Product(4, "Folding e-bike", 3500L)
         );
     }
 

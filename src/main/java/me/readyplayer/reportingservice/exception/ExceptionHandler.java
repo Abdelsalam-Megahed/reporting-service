@@ -49,7 +49,7 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(IOException.class)
     public Map<String, String> handleIOException(IOException exception) {
         Map<String, String> errorMap = new HashMap<>();
-        System.out.println(exception);
+
         errorMap.put("error", "Directory is not found!");
 
         return errorMap;
