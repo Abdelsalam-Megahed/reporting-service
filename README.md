@@ -20,8 +20,11 @@ Frontend stack: Vue 3 and Vite
 - Report is stored on local disk after being generated, in a production environment, it would be stored on the cloud
 - Request validation and exception handling are in place
 - Prolonged timeout duration from 60s to 120s for handling long running jobs, was thinking about pushing the report
-  generation job to a queue/worker
-  but it doesn't fit in the current use case as the client would be waiting for a response, looking forward to discuss
+  generation job to a queue/worker,
+  but it doesn't fit in the current use case as the client would be waiting for a response as HTTP requests can only
+  flow in one direction from the client side, two-way communication solution could be using web sockets for handling
+  long running jobs, but this would be more suitable with a frontend that displays dashboards that need to be updated
+  instantly for example not for downloading a report, looking forward to discuss
   this point
 - Added tests for success and failure scenarios
 - Created frontend app with a form and a generate button for instant download on the client side
