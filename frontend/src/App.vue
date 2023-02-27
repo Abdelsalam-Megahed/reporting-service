@@ -18,6 +18,24 @@ export default {
     this.fetchProducts();
   },
   methods: {
+    isFormValid() {
+      if (!this.form.productId) {
+        this.error = "Please select a product!";
+        return false;
+      }
+
+      if (this.form.quantity === "") {
+        this.error = "Please set a quantity!";
+        return false;
+      }
+
+      if (this.form.quantity < 1) {
+        this.error = "Quantity must be greater than or equal to 1!";
+        return false;
+      }
+
+      return true;
+    },
     fetchProducts() {
       axios
           .get("http://localhost:8080/api/v1/products")
@@ -29,8 +47,7 @@ export default {
           });
     },
     downloadReport() {
-      if (!this.form.productId) {
-        this.error = "Please select a product!";
+      if (!this.isFormValid()) {
         return;
       }
 
@@ -71,9 +88,7 @@ export default {
     <h2>Create your report</h2>
     <form @submit.prevent="downloadReport">
       <div class="dropdown-container">
-        <p style="padding: 10px 0; font-size: 16px; color: #e8d5c4">
-          Product name
-        </p>
+        <p>Product name</p>
         <div
             class="option"
             :class="{ active: product.id === form.productId }"
@@ -86,7 +101,7 @@ export default {
       </div>
 
       <div class="input-container">
-        <input type="number" v-model="form.quantity" required min="1"/>
+        <input type="number" v-model="form.quantity"/>
         <label>Quantity</label>
       </div>
       <div class="input-container">
@@ -133,6 +148,12 @@ body {
   padding: 0;
   color: #fff;
   text-align: center;
+}
+
+.form-container p {
+  padding: 10px 0;
+  font-size: 16px;
+  color: #e8d5c4
 }
 
 .dropdown-container {
