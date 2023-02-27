@@ -34,6 +34,11 @@ export default {
         return false;
       }
 
+      if (this.form.quantity > 10000) {
+        this.error = "Quantity must be less than or equal to 10000!";
+        return false;
+      }
+
       return true;
     },
     fetchProducts() {
