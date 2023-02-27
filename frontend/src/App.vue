@@ -18,29 +18,6 @@ export default {
     this.fetchProducts();
   },
   methods: {
-    isFormValid() {
-      if (!this.form.productId) {
-        this.error = "Please select a product!";
-        return false;
-      }
-
-      if (this.form.quantity === "") {
-        this.error = "Please set a quantity!";
-        return false;
-      }
-
-      if (this.form.quantity < 1) {
-        this.error = "Quantity must be greater than or equal to 1!";
-        return false;
-      }
-
-      if (this.form.quantity > 10000) {
-        this.error = "Quantity must be less than or equal to 10000!";
-        return false;
-      }
-
-      return true;
-    },
     fetchProducts() {
       axios
           .get("http://localhost:8080/api/v1/products")
@@ -80,6 +57,29 @@ export default {
           });
 
       this.disableDownloadButton = false;
+    },
+    isFormValid() {
+      if (!this.form.productId) {
+        this.error = "Please select a product!";
+        return false;
+      }
+
+      if (this.form.quantity === "") {
+        this.error = "Please set a quantity!";
+        return false;
+      }
+
+      if (this.form.quantity < 1) {
+        this.error = "Quantity must be greater than or equal to 1!";
+        return false;
+      }
+
+      if (this.form.quantity > 10000) {
+        this.error = "Quantity must be less than or equal to 10000!";
+        return false;
+      }
+
+      return true;
     },
     selectProduct(id) {
       this.form.productId = id;
@@ -132,7 +132,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #f0eeed;
+  background: #4d455d;
 }
 
 .form-container {
@@ -151,14 +151,14 @@ body {
 .form-container h2 {
   margin: 0 0 30px;
   padding: 0;
-  color: #fff;
+  color: #f5e9cf;
   text-align: center;
 }
 
 .form-container p {
   padding: 10px 0;
   font-size: 16px;
-  color: #e8d5c4
+  color: #f5e9cf;
 }
 
 .dropdown-container {
@@ -169,14 +169,14 @@ body {
 .option {
   padding: 8px 4px;
   margin-bottom: 8px;
-  color: #e8d5c4;
+  color: #f5e9cf;
   border: 1px solid #fff;
   border-radius: 4px;
   font-size: 14px;
 }
 
 .active {
-  border: 2px solid #e8d5c4;
+  border: 2px solid #7db9b6;
 }
 
 .option:hover {
@@ -205,12 +205,12 @@ body {
   left: 0;
   padding: 10px 0;
   font-size: 16px;
-  color: #e8d5c4;
+  color: #f5e9cf;
 }
 
 button {
   padding: 10px 20px;
-  color: #e8d5c4;
+  color: #7db9b6;
   font-size: 18px;
   text-decoration: none;
   overflow: hidden;
@@ -222,7 +222,7 @@ button {
 }
 
 button:hover {
-  background: #e8d5c4;
+  background: #7db9b6;
   color: #fff;
   cursor: pointer;
 }
@@ -238,7 +238,7 @@ button:disabled {
 }
 
 .error-message {
-  color: #f94a29;
+  color: #e96479;
   margin-top: 32px;
 }
 </style>
