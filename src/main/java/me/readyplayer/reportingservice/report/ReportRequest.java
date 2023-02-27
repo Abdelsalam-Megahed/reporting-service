@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportRequest {
-    @NotNull(message = "Product id is invalid!")
+    @NotNull
+    @Min(1)
     private int productId;
     @Min(1)
     private int quantity;
